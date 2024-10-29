@@ -48,14 +48,14 @@ func (u *UserService) Register(newData users.User) (*users.User, error) {
 }
 
 func (u *UserService) Login(username string, password string) (*users.UserCredential, error) {
-	dataUser, err := u.data.GetByUsername(username)
+	dataUser, err := u.data.GetPasswordByUsername(username)
 
 	if err != nil {
 		logrus.Error("Service : Username Not Found")
 		return nil, errors.New("username not found")
 	}
 
-	if err := helper.ComparePassword(dataUser.Password, password); err != nil {
+	if errPass := helper.ComparePassword(dataUser.Password, password); errPass != nil {
 		logrus.Error("Service : Password Incorrect")
 		return nil, errors.New("password incorrect")
 	}

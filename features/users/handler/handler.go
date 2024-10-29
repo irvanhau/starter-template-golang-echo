@@ -69,6 +69,11 @@ func (u *UserHandler) Login() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, helper.FormatResponse("Invalid User Input", nil))
 		}
 
+		isValid, errors := helper.ValidateJSON(input)
+		if !isValid {
+			return c.JSON(http.StatusBadRequest, helper.FormatResponseValidation("Invalid Format Request", errors))
+		}
+
 		result, err := u.service.Login(input.Username, input.Password)
 
 		if err != nil {

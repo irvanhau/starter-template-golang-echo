@@ -2,6 +2,7 @@ package configs
 
 import (
 	"errors"
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/sirupsen/logrus"
 	"os"
 	"strconv"
@@ -30,6 +31,23 @@ func InitConfig() *ProgramConfig {
 
 	return res
 }
+
+//func readData() *ProgramConfig {
+//	var data = new(ProgramConfig)
+//	data, _ = loadConfig()
+//
+//	if data == nil {
+//		err := godotenv.Load(".env")
+//		data, errorData := loadConfig()
+//
+//		fmt.Println(errorData)
+//
+//		if err != nil || data == nil {
+//			return nil
+//		}
+//	}
+//	return data
+//}
 
 func loadConfig() (*ProgramConfig, error) {
 	var errorLoad error

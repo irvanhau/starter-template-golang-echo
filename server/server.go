@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/sirupsen/logrus"
@@ -30,7 +31,7 @@ func (s *Server) RunServer() {
 		}))
 
 	s.e.Use(middleware.Recover())
-	s.e.Logger.Debug()
+	s.e.Logger.Fatal(s.e.Start(fmt.Sprintf(":%d", s.c.Server)).Error())
 }
 func (s *Server) MigrateDB() {
 	db := database.InitDB(s.c)

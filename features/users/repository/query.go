@@ -67,10 +67,9 @@ func (ud *UserData) Login(username string, password string) (*users.User, error)
 
 func (ud *UserData) GetByID(id int) (*users.User, error) {
 	var dbData = new(User)
-	dbData.ID = uint(id)
 	dbData.Status = true
-	
-	var qry = ud.db.Where("id = ? AND status = ?", dbData.ID, dbData.Status).First(&dbData)
+
+	var qry = ud.db.Where("id = ? AND status = ?", id, dbData.Status).First(&dbData)
 
 	var result = new(users.User)
 	if err := qry.Error; err != nil {
@@ -93,7 +92,7 @@ func (ud *UserData) GetByUsername(username string) (*users.User, error) {
 	dbData.Username = username
 	dbData.Status = true
 
-	var qry = ud.db.Where("username = ? AND status = ?", dbData.Username, dbData.Status).First(dbData)
+	var qry = ud.db.Where("username = ? AND status = ?", dbData.Username, dbData.Status).First(&dbData)
 
 	if err := qry.Error; err != nil {
 		logrus.Error("DATA : Error Get By Username : ", err.Error())
@@ -107,6 +106,24 @@ func (ud *UserData) GetByUsername(username string) (*users.User, error) {
 	result.PhoneNumber = dbData.PhoneNumber
 	result.IsAdmin = dbData.IsAdmin
 	result.Status = dbData.Status
+
+	return result, nil
+}
+
+func (ud *UserData) GetPasswordByUsername(username string) (*users.User, error) {
+	var dbData = new(User)
+	dbData.Username = username
+	dbData.Status = true
+
+	var qry = ud.db.Where("username = ? AND status = ?", dbData.Username, dbData.Status).First(&dbData)
+
+	if err := qry.Error; err != nil {
+		logrus.Error("DATA : Error Get By Username : ", err.Error())
+		return nil, err
+	}
+
+	var result = new(users.User)
+	result.Password = dbData.Password
 
 	return result, nil
 }

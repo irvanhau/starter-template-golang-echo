@@ -34,4 +34,5 @@ type UserDataInterface interface {
 	Login(username, password string) (*User, error)
 	GetByID(id int) (*User, error)
 	GetByUsername(username string) (*User, error)
+	GetPasswordByUsername(username string) (*User, error)
 }
