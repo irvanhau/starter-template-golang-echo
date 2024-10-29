@@ -1,0 +1,66 @@
+version: '3.7'
+services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:16-alpine
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DBPASS}
+      - POSTGRES_USER=${DBUSER}
+      - POSTGRES_DB=${DBNAME}
+      - DATABASE_HOST=${DBHOST}
+    networks:
+      - mynet
+
+#  mysql:
+#    image: mysql:8.0
+#    container_name: mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: ${DBPASS}
+#      MYSQL_DATABASE: ${DBNAME}
+#    networks:
+#      - mynet
+#    ports:
+#      - '3306:3306'
+#    volumes:
+#      - mysql:/var/lib/mysql
+#    healthcheck:
+#      test: [ "CMD", "mysql", "-u$DBUSER",  "-p$DBPASS", "-e", "show databases;" ]
+#      interval: 60s
+
+  app:
+    image: pusb/pusb
+    container_name: pusb-app
+    environment:
+      - DBUSER=${DBUSER}
+      - DBPASS=${DBPASS}
+      - DBHOST=${DBHOST}
+      - DBPORT=${DBPORT}
+      - DBNAME=${DBNAME}
+      - SERVER=${SERVER}
+      - SECRET=${SECRET}
+      - REFSECRET=${REFSECRET}
+    ports:
+      - '8080:8080'
+    networks:
+      - mynet
+    volumes:
+      - api:/usr/src/app/
+
+networks:
+  mynet:
+    driver: bridge
+
+volumes:
+  api:
+  postgres:
+  mysql:

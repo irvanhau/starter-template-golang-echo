@@ -50,6 +50,14 @@ Clean Architecture
 - ```go mod tidy```
 - ```go run main.go wire_gen.go```
 
+## How To Use Variable Secret Github Action
+- DOCKERHUB_USERNAME = irvan (Docker Hub Username)
+- DOCKERHUB_TOKEN = (Generate Docker Hub Token)
+- HOST = 127.0.0.1 (SSH Host)
+- USERNAME root (SSH Username)
+- KEY = (Using SSH Private Key)
+- PORT = 22 (SSH Port)
+
 ### Notes
 
 - If you create the module, don't forget to add on ```injector.go``` and run command ```wire injector.go```
