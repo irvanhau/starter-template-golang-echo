@@ -51,12 +51,14 @@ Clean Architecture
 - ```go run main.go wire_gen.go```
 
 ## How To Use Variable Secret Github Action
-- DOCKERHUB_USERNAME = irvan (Docker Hub Username)
-- DOCKERHUB_TOKEN = (Generate Docker Hub Token)
-- HOST = 127.0.0.1 (SSH Host)
-- USERNAME root (SSH Username)
-- KEY = (Using SSH Private Key)
-- PORT = 22 (SSH Port)
+Variable Name | Example | Explain
+--- | --- | ---
+DOCKERHUB_USERNAME | irvan | (Docker Hub Username)
+DOCKERHUB_TOKEN | token | (Generate Docker Hub Token)
+HOST | 127.0.0.1 | (SSH Host)
+USERNAME | root | (SSH Username)
+KEY | key | (Using SSH Private Key)
+PORT | 22 | (SSH Port)
 
 ### Notes
 
